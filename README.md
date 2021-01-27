@@ -17,8 +17,8 @@ See data and graphics in [delta-analysis.ipynb](https://github.com/nikvoronin/ti
 
 ## Results
 
-- `System.Timers.Timer` and `System.Threading.Timer` limited with 15.6 ms. Can't tick faster.
-- `Multimedia Timer`. Stable 1ms on idle or heavy load but legacy.
+- `System.Timers.Timer` and `System.Threading.Timer` are limited with 15.6 ms. Can't tick faster.
+- `Multimedia Timer`. Stable at 1ms on idle or heavy load but legacy.
 - TwinCAT3 notifications. Not good at client side.
 - Independed threads. Not stable at heavy load.
 
