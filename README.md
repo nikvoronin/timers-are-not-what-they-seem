@@ -13,7 +13,7 @@ Analysis of the .NET timers with 1ms tick size:
   - Thread w/ `Thread.Sleep(0)`
   - No idle thread
 
-See data and graphics in [delta-analysis.ipynb](https://github.com/nikvoronin/timers-are-not-what-they-seem/blob/master/delta-analysis.ipynb) or [delta-analysis.html](https://github.com/nikvoronin/timers-are-not-what-they-seem/blob/master/delta-analysis.html) if you don't have Jupyter Notebooks.
+See data and graphics in [delta-analysis.ipynb](https://github.com/nikvoronin/timers-are-not-what-they-seem/blob/master/delta-analysis.ipynb). If you don't have Jupyter Notebooks, see [delta-analysis.html](https://github.com/nikvoronin/timers-are-not-what-they-seem/blob/master/delta-analysis.html).
 
 ## Results
 
