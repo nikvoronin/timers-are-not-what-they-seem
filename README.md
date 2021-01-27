@@ -13,7 +13,16 @@ Analysis of the .NET timers with 1ms tick size:
   - Thread w/ `Thread.Sleep(0)`
   - No idle thread
 
-See data and graphics in `delta-analysis.ipynb` or `delta-analysis.html` if you don't have Jupyter Notebooks.
+See data and graphics in [delta-analysis.ipynb](https://github.com/nikvoronin/timers-are-not-what-they-seem/blob/master/delta-analysis.ipynb) or [delta-analysis.html](https://github.com/nikvoronin/timers-are-not-what-they-seem/blob/master/delta-analysis.html) if you don't have Jupyter Notebooks.
+
+## Results
+
+- `System.Timers.Timer` and `System.Threading.Timer` limited with 15.6 ms. Can't tick faster.
+- `Multimedia Timer`. Stable 1ms on idle or heavy load but legacy.
+- TwinCAT3 notifications. Not good at client side.
+- Independed threads. Not stable at heavy load.
+
+Conclusion. Still use legacy `Multimedia Timer` or modern real-time systems like TC3.
 
 ## CPU Burner
 
