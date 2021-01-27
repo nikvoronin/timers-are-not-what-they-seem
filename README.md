@@ -53,8 +53,7 @@ See [MultimediaTimer.cs](https://github.com/nikvoronin/timers-are-not-what-they-
 
 ### RealTime system side
 
-System tick: 1ms
-PLC-Runtime: 1ms
+System tick and PLC-Runtime both are 1 millisecond.
 
 ```c#
 PROGRAM MAIN
