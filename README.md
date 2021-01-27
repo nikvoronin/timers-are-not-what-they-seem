@@ -24,6 +24,22 @@ See data and graphics in [delta-analysis.ipynb](https://github.com/nikvoronin/ti
 
 Conclusion. Still use legacy `Multimedia Timer` or modern real-time systems like TC3.
 
+## Goodreads
+
+[Acquiring high-resolution time stamps](https://docs.microsoft.com/en-us/windows/win32/sysinfo/acquiring-high-resolution-time-stamps) 31-05-2018
+
+- QPC support in Windows versions
+- Guidance for acquiring time stamps
+- Virtualization
+- Direct TSC usage
+- Examples for acquiring time stamps
+- General FAQ about QPC and TSC
+- FAQ about programming with QPC and TSC
+- Low-level hardware clock characteristics
+- Absolute Clocks and Difference Clocks
+- Resolution, Precision, Accuracy, and Stability
+- Hardware timer info
+
 ## CPU Burner
 
 Loads all cpu's cores w/ 100%
