@@ -11,7 +11,7 @@ Analysis of the .NET timers with 1ms tick size:
   - [SpinWait 10000us](https://github.com/nikvoronin/timers-are-not-what-they-seem/blob/master/doc/06-dedicated-thread--spinwait-1ms.ipynb)
   - [Thread.Sleep(0)](https://github.com/nikvoronin/timers-are-not-what-they-seem/blob/master/doc/07-dedicated-thread--thread-sleep-0.ipynb)
   - [Without idle between ticks](https://github.com/nikvoronin/timers-are-not-what-they-seem/blob/master/doc/08-dedicated-thread--no-idle-no-action.ipynb)
-  - [Period between ticks by Stopwatch](https://github.com/nikvoronin/timers-are-not-what-they-seem/blob/master/doc/09-dedicated-thread--no-idle-w-stopwatch-timer.ipynb)
+  - [Interval by Stopwatch](https://github.com/nikvoronin/timers-are-not-what-they-seem/blob/master/doc/09-dedicated-thread--interval-by-stopwatch-timer.ipynb)
 
 ## Results
 
