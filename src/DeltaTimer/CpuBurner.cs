@@ -19,7 +19,7 @@ namespace DeltaTimer
                             if (token.IsCancellationRequested)
                                 break;
 
-                            a /= j * i;
+                            a /= j * (i + 1);
                         }
                     } );
                 }
