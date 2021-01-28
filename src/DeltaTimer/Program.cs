@@ -12,6 +12,7 @@ namespace DeltaTimer
 {
     class Program
     {
+        static long lastStamp2 = 0;
         static long lastStamp = 0;
         static long[] deltas = new long[10000 * 1000 * 60]; // 1 us - 1 min
         static long lastDeltasIndex = 0;
@@ -25,9 +26,10 @@ namespace DeltaTimer
             //Do_ThreadingTimer(1, burn:true);
             //Do_TimersTimer(interval: 1, burn: false);
             //Do_MultimediaTimer(1, burn: true);
-            Do_ThreadSleepN(burn: true);
+            //Do_ThreadSleepN(burn: true);
+            Do_DedicatedThreadStopwatch(burn: true);
 
-            using Stream csv = File.OpenWrite( $"th-nosleep-load.csv" );
+            using Stream csv = File.OpenWrite( $"th-nosleep-sw-load.csv" );
             using TextWriter writer = new StreamWriter( csv );
             writer.WriteLine("load");
 
@@ -46,13 +48,39 @@ namespace DeltaTimer
             long now = Stopwatch.GetTimestamp();
             long delta = now - lastStamp;
 
-            if (now - startStamp > 20 * 1000 * 10000) // 20 s warmup
+            if (now - startStamp > 10 * 1000 * 10000) // 10 s warmup
                 deltas[lastDeltasIndex++] = delta;
 
             if (lastDeltasIndex >= 10000)
                 Console.WriteLine("DONE");
 
             lastStamp = now;
+        }
+
+        public static void Do_DedicatedThreadStopwatch(bool burn)
+        {
+            var cts = new CancellationTokenSource();
+            new Thread(() => SwatchedWorker(cts.Token)).Start();
+
+            if (burn)
+                CpuBurner.Fire(cts.Token);
+
+            Wait_PressEnterToStop();
+
+            cts.Cancel();
+        }
+
+        public static void SwatchedWorker(CancellationToken token)
+        {
+            while (!token.IsCancellationRequested) {
+                long now = Stopwatch.GetTimestamp();
+                long delta = now - lastStamp2;
+
+                if (delta > 10000) { // 10000us = 1ms
+                    DoTick();
+                    lastStamp2 = now;
+                }
+            }
         }
 
         public static void Do_ThreadSleepN(bool burn)
@@ -68,7 +96,6 @@ namespace DeltaTimer
             cts.Cancel();
         }
 
-        //static long lastt = 0;
         public static void Worker(CancellationToken token)
         {
             while (!token.IsCancellationRequested) {
@@ -77,7 +104,7 @@ namespace DeltaTimer
                 //SpinWait.SpinUntil( () => {
                 //    long now = Stopwatch.GetTimestamp();
                 //    long delta = now - lastt;
-                //    lastt = now;
+                //    lastStamp2 = now;
 
                 //    return delta > 10000;
                 //} );
