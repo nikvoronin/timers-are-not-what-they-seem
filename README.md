@@ -13,6 +13,8 @@ Analysis of the .NET timers with 1ms tick size:
   - [Without idle between ticks](https://github.com/nikvoronin/timers-are-not-what-they-seem/blob/master/doc/08-dedicated-thread--no-idle-no-action.ipynb)
   - [Interval by Stopwatch](https://github.com/nikvoronin/timers-are-not-what-they-seem/blob/master/doc/09-dedicated-thread--interval-by-stopwatch-timer.ipynb)
 
+If you don't have Jupiter Notebooks installed locally, just use online [Jupyter NBViewer](https://nbviewer.jupyter.org/github/nikvoronin/timers-are-not-what-they-seem/tree/master/doc/)
+
 ## Results
 
 - `System.Timers.Timer` and `System.Threading.Timer` are limited with 15.6 ms by default.
