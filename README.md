@@ -2,43 +2,37 @@
 
 Analysis of the .NET timers with 1ms tick size:
 
-- `System.Timers.Timer`
-- `System.Threading.Timer`
-- `Multimedia Timer` import from `winmm.dll`
-- TwinCAT 3. Notifications
-- Independed thread w/
-  - `Thread.Sleep(1)`
-  - `SpinWait` over 10000us = 1ms
-- Supplement
-  - Thread w/ `Thread.Sleep(0)`
-  - No idle thread
-
-See data and graphics in [delta-analysis.ipynb](https://github.com/nikvoronin/timers-are-not-what-they-seem/blob/master/delta-analysis.ipynb). If you don't have Jupyter Notebooks, see [delta-analysis.html](https://github.com/nikvoronin/timers-are-not-what-they-seem/blob/master/delta-analysis.html).
+- [System.Timers.Timer](https://github.com/nikvoronin/timers-are-not-what-they-seem/blob/master/doc/01-system-timers-timer.ipynb)
+- [System.Threading.Timer](https://github.com/nikvoronin/timers-are-not-what-they-seem/blob/master/doc/02-system-threading-timer.ipynb)
+- [Multimedia Timer](https://github.com/nikvoronin/timers-are-not-what-they-seem/blob/master/doc/03-multimedia-timer--winmm-dll.ipynb) imported from `winmm.dll`
+- [TwinCAT 3. Soft Real-Time System](https://github.com/nikvoronin/timers-are-not-what-they-seem/blob/master/doc/04-twincat3-soft-realtime-system--notifications.ipynb)
+- Dedicated Thread
+  - [Thread.Sleep(1)](https://github.com/nikvoronin/timers-are-not-what-they-seem/blob/master/doc/05-dedicated-thread--thread-sleep-1ms.ipynb)
+  - [SpinWait 10000us](https://github.com/nikvoronin/timers-are-not-what-they-seem/blob/master/doc/06-dedicated-thread--spinwait-1ms.ipynb)
+  - [Thread.Sleep(0)](https://github.com/nikvoronin/timers-are-not-what-they-seem/blob/master/doc/07-dedicated-thread--thread-sleep-0.ipynb)
+  - [Without idle between ticks](https://github.com/nikvoronin/timers-are-not-what-they-seem/blob/master/doc/08-dedicated-thread--no-idle-no-action.ipynb)
+  - [Period between ticks by Stopwatch](https://github.com/nikvoronin/timers-are-not-what-they-seem/blob/master/doc/09-dedicated-thread--no-idle-w-stopwatch-timer.ipynb)
 
 ## Results
 
-- `System.Timers.Timer` and `System.Threading.Timer` are limited with 15.6 ms. Can't tick faster.
-- `Multimedia Timer`. Stable at 1ms on idle or heavy load but legacy.
+- `System.Timers.Timer` and `System.Threading.Timer` are limited with 15.6 ms by default.
+- `Multimedia Timer`. Always stable but legacy.
 - TwinCAT3 notifications. Not good at client side.
 - Independed threads. Not stable at heavy load.
 
-Conclusion. Still use legacy `Multimedia Timer` or modern real-time systems like TC3.
+**Conclusion.** Should use legacy `Multimedia Timer` or modern real-time systems like TC3.
 
 ## Goodreads
 
-[Acquiring high-resolution time stamps](https://docs.microsoft.com/en-us/windows/win32/sysinfo/acquiring-high-resolution-time-stamps) 31-05-2018
+- [Acquiring high-resolution time stamps](https://docs.microsoft.com/en-us/windows/win32/sysinfo/acquiring-high-resolution-time-stamps) -- 31-05-2018
 
-- QPC support in Windows versions
-- Guidance for acquiring time stamps
-- Virtualization
-- Direct TSC usage
-- Examples for acquiring time stamps
-- General FAQ about QPC and TSC
-- FAQ about programming with QPC and TSC
-- Low-level hardware clock characteristics
-- Absolute Clocks and Difference Clocks
-- Resolution, Precision, Accuracy, and Stability
-- Hardware timer info
+- [Results of some quick research on timing in Win32 by Ryan Geiss](http://www.geisswerks.com/ryan/FAQS/timing.html) -- 16 August 2002 (...with updates since then)
+
+- [Real-Time Systems with Microsoft Windows CE 2.1](https://docs.microsoft.com/en-us/previous-versions/ms834197(v=msdn.10)?redirectedfrom=MSDN#realtime21_latency) -- 06/29/2006
+
+- `pdf` [A Real Time Operating Systems (RTOS) Comparison](http://csbc2009.inf.ufrgs.br/anais/pdf/wso/st04_03.pdf)
+
+- `docx` [Timers, Timer Resolution, and Development of Efficient Code](http://download.microsoft.com/download/3/0/2/3027d574-c433-412a-a8b6-5e0a75d5b237/timer-resolution.docx) -- June 16, 2010
 
 ## CPU Burner
 
@@ -52,7 +46,7 @@ while (!token.IsCancellationRequested) {
             if (token.IsCancellationRequested)
                 break;
 
-            a /= j * i;
+            a /= j * (i + 1);
         }
     } );
 }
@@ -74,9 +68,9 @@ internal static extern void TimeKillEvent( UInt32 uTimerId );
 
 See [MultimediaTimer.cs](https://github.com/nikvoronin/timers-are-not-what-they-seem/blob/master/src/DeltaTimer/MultimediaTimer.cs)
 
-## TwinCAT 3. Notifications
+## TwinCAT 3. Soft Real-Time System
 
-### RealTime system side
+### RT-system Side
 
 System tick and PLC-Runtime both are 1 millisecond.
 
@@ -91,7 +85,7 @@ tick := NOT tick;
 END_PROGRAM
 ```
 
-### Client side
+### Client Side
 
 ```csharp
 AdsClient client = new AdsClient();
